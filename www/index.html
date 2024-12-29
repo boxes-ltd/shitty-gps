@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/html">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ShittyGPS</title>
+    <script language="JavaScript">
+        if ("geolocation" in navigator) {
+            /* geolocation is available */
+            const options = {
+                enableHighAccuracy: true,
+                timeout: 5000,
+                maximumAge: 0,
+            };
+
+            navigator.geolocation.watchPosition((position) => {
+                document.getElementById("log").value += JSON.stringify(position) + "\n";
+            }, (error) => {
+                console.log(error);
+            }, options);
+        } else {
+            /* geolocation IS NOT available */
+            alert("Geolocation is not supported by this browser.");
+        }
+
+        function copyToClipboard() {
+            var copyText = document.getElementById("log");
+            navigator.clipboard.writeText(copyText.value);
+        }
+    </script>
+    <style>
+        html, body {
+            margin: 0;
+            height: 100%;
+            min-height: 100%;
+        }
+
+        body {
+            display: flex;
+            flex-direction: column;
+        }
+
+        header,
+        footer {
+            flex: none;
+        }
+
+        header {
+            padding: 0 1em;
+        }
+
+        footer {
+            padding: 1em;
+        }
+
+        main {
+            overflow-y: scroll;
+            -webkit-overflow-scrolling: touch;
+            flex: auto;
+            padding: 1em;
+        }
+
+        main div {
+            height: 100%;
+            width: 100%;
+        }
+
+        main div textarea {
+            height: 100%;
+            width: 100%;
+            box-sizing: border-box;
+            resize: none;
+            font-family: monospace;
+        }
+    </style>
+</head>
+<body>
+<header>
+    <h1>ShittyGPS v2</h1>
+</header>
+<main>
+    <div>
+        <textarea id="log" readonly="readonly"></textarea>
+    </div>
+</main>
+<footer>
+    <button onclick="copyToClipboard()">Copy to clipboard</button>
+</footer>
+</body>
+</html>
