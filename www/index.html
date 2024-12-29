@@ -14,7 +14,9 @@
             };
 
             navigator.geolocation.watchPosition((position) => {
-                document.getElementById("log").value += JSON.stringify(position) + "\n";
+                const textarea = document.getElementById("log");
+                textarea.value += JSON.stringify(position) + "\n";
+                textarea.scrollTop = textarea.scrollHeight;
             }, (error) => {
                 console.log(error);
             }, options);
@@ -24,8 +26,8 @@
         }
 
         function copyToClipboard() {
-            var copyText = document.getElementById("log");
-            navigator.clipboard.writeText(copyText.value);
+            const textarea = document.getElementById("log");
+            navigator.clipboard.writeText(textarea.value);
         }
     </script>
     <style>
